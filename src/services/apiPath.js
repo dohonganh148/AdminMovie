@@ -15,5 +15,6 @@ const apiPath = {
     TYPE_USER: "/api/QuanLyNguoiDung/LayDanhSachLoaiNguoiDung",
     ADD_USER: "/api/QuanLyNguoiDung/ThemNguoiDung",
     SEARCH_USER_LIST: "/api/QuanLyNguoiDung/LayDanhSachNguoiDung",
+    UPDATE_USER: "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
 };
 export default apiPath;

@@ -3,7 +3,7 @@ import styles from "./UpdateUser.module.scss";
 import { Button, Form, Input, Select } from "antd";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getUserListSearch } from "services/adminService";
+import { getUserListSearch, updateUser } from "services/adminService";
 
 const UpdateUser = () => {
   const typeOfUser = useSelector((state) => state.admin.typeOfUser);
@@ -21,7 +21,7 @@ const UpdateUser = () => {
       let res = await getUserListSearch(params.id);
       console.log(res);
       if (res.data && res.status === 200) {
-          const user = res.data.content;
+          const user = res.data.content[0];
           form.setFieldsValue({
               taiKhoan: user.taiKhoan,
               matKhau: user.matKhau,
@@ -35,9 +35,21 @@ const UpdateUser = () => {
   };
   useEffect( () => {
       setInititalValue()
-  }, []);
+  },[]);
 
-  const onFinish = () => {};
+  const onFinish = async (values) => {
+      const params = {
+          taiKhoan: values.taiKhoan,
+          matKhau: values.matKhau,
+          email: values.email,
+          soDt: values.soDt,
+          maNhom: values.maNhom,
+          maLoaiNguoiDung: values.maLoaiNguoiDung,
+          hoTen: values.hoTen,
+      };
+      let res = await updateUser(params);
+      
+  };
   return (
     <div className={styles.updateUser}>
       <h3>Cập nhật thông tin người dùng</h3>
@@ -59,6 +71,10 @@ const UpdateUser = () => {
               },
             ]}
           >
+            <Input />
+          </Form.Item>
+
+          <Form.Item  name="maNhom" hidden>
             <Input />
           </Form.Item>
 

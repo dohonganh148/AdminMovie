@@ -197,3 +197,17 @@ export const getUserListSearch = async (keywords) => {
     console.log(err)
   }
 }
+
+// POST API de cap nhat thong tin user
+export const updateUser = async (values) => {
+  try{
+    const res = await requester({
+      method: "POST",
+      url: apiPath.UPDATE_USER,
+      data: values,
+    });
+    return res;
+  } catch(err) {
+    console.log(err)
+  }
+}
