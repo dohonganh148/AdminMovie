@@ -1,0 +1,59 @@
+.content {
+  padding: 10px 20px;
+  h4 {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  .btn {
+    margin-bottom: 10px;
+  }
+  .search {
+    margin-bottom: 16px;
+  }
+  .table {
+    img {
+      width: 80px;
+      height: 80px;
+    }
+    .name {
+      font-weight: bold;
+    }
+    .option {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      .update {
+        svg {
+          color: green;
+          width: 18px;
+          height: 18px;
+          transition: all 0.3s linear;
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+      .delete {
+        color: red;
+        transition: all 0.3s linear;
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+      .showtime{
+        margin-top: 4px;
+        svg {
+          color: purple;
+          width: 24px;
+          height: 24px;
+          transition: all 0.3s linear;
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  }
+}

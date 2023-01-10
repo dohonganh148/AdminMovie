@@ -1,0 +1,13 @@
+.showtime{
+    h3{
+        margin-bottom: 40px;
+    }
+    .content{
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        margin-left: 20px;
+        img{
+            width: 100%;
+        }
+    }
+}
