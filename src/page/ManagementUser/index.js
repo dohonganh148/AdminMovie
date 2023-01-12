@@ -8,43 +8,52 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { fetchUserList, fetchUserListSearch } from "redux/actions/adminAction";
 import { deleteUser } from "services/adminService";
 
-const { Search } = Input;
+
+const ManagementUser = () => {
+  const { Search } = Input;
+  const auth = useSelector(state => state.authen.profile);
 
 const columns = [
   {
-    title: <div className={styles.titleId}>Mã người dùng</div>,
+    title: <div className={styles.titleId}>STT</div>,
     dataIndex: "userId",
+    width: "5%",
     sorter: (a, b) => a.age - b.age,
   },
   {
     title: <div className={styles.titleAccount}>Tài khoản</div>,
     dataIndex: "account",
+    width: "15%",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
     title: <div className={styles.titlePassword}>Mật khẩu</div>,
     dataIndex: "password",
+    width: "15%",
   },
   {
     title: <div className={styles.titleName}>Họ tên</div>,
     dataIndex: "name",
+    width: "15%",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
     title: <div className={styles.titleEmail}>Email</div>,
     dataIndex: "email",
+    width: "20%",
   },
   {
     title: <div className={styles.titleTel}>Số điện thoại</div>,
     dataIndex: "telNum",
+    width: "15%",
   },
   {
     title: <div className={styles.titleOption}>Tuỳ chọn</div>,
     dataIndex: "action",
+    width: "10%",
+    hidden: auth?.maLoaiNguoiDung !== "QuanTri",
   },
-];
-
-const ManagementUser = () => {
+].filter((item) => !item.hidden);
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(1);
   const pageSize = 6;
@@ -103,11 +112,11 @@ const ManagementUser = () => {
   return (
     <div className={styles.content}>
       <h4>Quản lý người dùng </h4>
-      <div className={styles.btn}>
+      { auth?.maLoaiNguoiDung === "QuanTri" ? (<div className={styles.btn}>
         <Link to="/adduser">
           <Button type="primary">Thêm người dùng</Button>
         </Link>
-      </div>
+      </div>) : ""}
       <div className={styles.search}>
         <Search
           placeholder="Nhập vào tài khoản hoặc họ tên người dùng"

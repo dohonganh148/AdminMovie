@@ -1,54 +1,62 @@
 import React, { useEffect } from "react";
 import styles from "./UpdateUser.module.scss";
 import { Button, Form, Input, Select } from "antd";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUserListSearch, updateUser } from "services/adminService";
+import { fetchTypeOfUser, fetchUserList } from "redux/actions/adminAction";
 
 const UpdateUser = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchTypeOfUser());
+  }, [dispatch]);
   const typeOfUser = useSelector((state) => state.admin.typeOfUser);
 
-  const getOptions = typeOfUser.map(item => {
-      return {
-        value: item.maLoaiNguoiDung,
-        label: item.tenLoai,
-      }
+  const getOptions = typeOfUser.map((item) => {
+    return {
+      value: item.maLoaiNguoiDung,
+      label: item.tenLoai,
+    };
   });
 
   const params = useParams();
   const [form] = Form.useForm();
   const setInititalValue = async () => {
-      let res = await getUserListSearch(params.id);
-      console.log(res);
-      if (res.data && res.status === 200) {
-          const user = res.data.content[0];
-          form.setFieldsValue({
-              taiKhoan: user.taiKhoan,
-              matKhau: user.matKhau,
-              email: user.email,
-              soDt: user.soDt,
-              maNhom: user.maNhom,
-              maLoaiNguoiDung: user.maLoaiNguoiDung,
-              hoTen: user.hoTen,
-          })
-      }
+    let res = await getUserListSearch(params.id);
+    if (res.data && res.status === 200) {
+      const user = res.data.content[0];
+      form.setFieldsValue({
+        taiKhoan: user.taiKhoan,
+        matKhau: user.matKhau,
+        email: user.email,
+        soDt: user.soDT,
+        maNhom: "GP06",
+        maLoaiNguoiDung: user.maLoaiNguoiDung,
+        hoTen: user.hoTen,
+      });
+    }
   };
-  useEffect( () => {
-      setInititalValue()
-  },[]);
+  useEffect(() => {
+    setInititalValue();
+  }, []);
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
-      const params = {
-          taiKhoan: values.taiKhoan,
-          matKhau: values.matKhau,
-          email: values.email,
-          soDt: values.soDt,
-          maNhom: values.maNhom,
-          maLoaiNguoiDung: values.maLoaiNguoiDung,
-          hoTen: values.hoTen,
-      };
-      let res = await updateUser(params);
-      
+    const params = {
+      taiKhoan: values.taiKhoan,
+      matKhau: values.matKhau,
+      email: values.email,
+      soDt: values.soDt,
+      maNhom: values.maNhom,
+      maLoaiNguoiDung: values.maLoaiNguoiDung,
+      hoTen: values.hoTen,
+    };
+    let res = await updateUser(params);
+    if (res.data.statusCode === 200) {
+      dispatch(fetchUserList(6, 1));
+      navigate("/userlist");
+    }
   };
   return (
     <div className={styles.updateUser}>
@@ -60,6 +68,7 @@ const UpdateUser = () => {
           name="basic"
           onFinish={onFinish}
           className={styles.form}
+          form={form}
         >
           <Form.Item
             label="Tài khoản"
@@ -71,10 +80,10 @@ const UpdateUser = () => {
               },
             ]}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
 
-          <Form.Item  name="maNhom" hidden>
+          <Form.Item name="maNhom" hidden>
             <Input />
           </Form.Item>
 

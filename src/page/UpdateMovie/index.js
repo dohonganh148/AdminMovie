@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Moment from "moment";
 import { useDispatch } from "react-redux";
 import { fetchMovieListAction } from "redux/actions/adminAction";
+
 const UpdateMovie = () => {
   const [componentSize, setComponentSize] = useState("default");
   const [uploadImg, setUploadImg] = useState("");

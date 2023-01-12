@@ -11,31 +11,43 @@ import Showtime from "page/Showtime";
 import ManagementUser from "page/ManagementUser";
 import AddUser from "page/AddUser";
 import UpdateUser from "page/UpdateUser";
+import Login from "page/Login";
+import Signup from "page/Signup";
 
 const { Header, Content, Sider } = Layout;
 
-const menu = [
-  {
-    label: "Movies",
-    link: "/movies",
-    key: "00",
-    subMenu: [
-      { label: "Movies List", link: "/", key: "01" },
-      { label: "Add new", link: "/addmovie", key: "02" },
-    ],
-  },
-  {
-    label: "Users",
-    link: "/users",
-    key: "10",
-    subMenu: [
-      { label: "Users List", link: "/userlist", key: "11" },
-      { label: "Add new", link: "/adduser", key: "12" },
-    ],
-  },
-];
-
 const LayoutAdmin = ({ children }) => {
+  const auth = useSelector((state) => state?.authen?.profile);
+  const menu = [
+    {
+      label: "Movies",
+      link: "/movies",
+      key: "00",
+      subMenu: [
+        { label: "Movies List", link: "/", key: "01" },
+        {
+          label: "Add new",
+          link: "/addmovie",
+          key: "02",
+          hidden: auth?.maLoaiNguoiDung !== "QuanTri",
+        },
+      ].filter((item) => !item.hidden),
+    },
+    {
+      label: "Users",
+      link: "/users",
+      key: "10",
+      subMenu: [
+        { label: "Users List", link: "/userlist", key: "11" },
+        {
+          label: "Add new",
+          link: "/adduser",
+          key: "12",
+          hidden: auth?.maLoaiNguoiDung !== "QuanTri",
+        },
+      ].filter((item) => !item.hidden),
+    },
+  ];
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -78,9 +90,9 @@ const LayoutAdmin = ({ children }) => {
             <div className={styles.profile}>
               <span className={styles.user}>Hello, {profile?.hoTen}</span>
               <div className={styles.dropdownMenu}>
-                <div className={styles.menuItem} onClick={handleLogout}>
+                <button className={styles.menuItem} onClick={handleLogout}>
                   Đăng xuất
-                </div>
+                </button>
               </div>
             </div>
           ) : (
@@ -116,6 +128,7 @@ const LayoutAdmin = ({ children }) => {
           style={{
             background: colorBgContainer,
           }}
+          className="sider"
         >
           <Menu
             onClick={(e) => handleClick(e)}
@@ -142,8 +155,8 @@ const LayoutAdmin = ({ children }) => {
           <Content
             style={{
               padding: 24,
-              margin: 0,
-              height: "100vh",
+              marginTop: 64,
+              height: "calc(100vh - 118px)",
               background: colorBgContainer,
             }}
           >
@@ -155,6 +168,8 @@ const LayoutAdmin = ({ children }) => {
               <Route path="userlist" element={<ManagementUser />} />
               <Route path="adduser" element={<AddUser />} />
               <Route path="updateuser/:id" element={<UpdateUser />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
             </Routes>
           </Content>
         </Layout>

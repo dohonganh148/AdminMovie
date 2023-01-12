@@ -10,3 +10,11 @@
   width: 120px !important;
   height: 30px !important;
 }
+.header{
+  position: fixed;
+  width: 100%;
+  z-index: 9;
+}
+.sider{
+  margin-top: 64px;
+}

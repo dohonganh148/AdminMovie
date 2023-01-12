@@ -13,35 +13,11 @@ const { Search } = Input;
 
 const onSearch = (value) => console.log(value);
 
-const columns = [
-  {
-    title: <div className={styles.titleId}>Mã phim</div>,
-    dataIndex: "movieId",
-    sorter: (a, b) => a.age - b.age,
-  },
-  {
-    title: <div className={styles.titleImg}>Hình ảnh</div>,
-    dataIndex: "image",
-  },
-  {
-    title: <div className={styles.titleName}>Tên phim</div>,
-    dataIndex: "name",
-    sorter: (a, b) => a.name.length - b.name.length,
-  },
-  {
-    title: <div className={styles.titleDesc}>Mô tả</div>,
-    dataIndex: "desc",
-  },
-  {
-    title: <div className={styles.titleOption}>Tuỳ chọn</div>,
-    dataIndex: "action",
-  },
-];
-
 const ManagementMovie = () => {
   const dispatch = useDispatch();
   const movieList = useSelector((state) => state.admin.movieList);
   const [current, setCurrent] = useState(1);
+  const auth = useSelector((state) => state.authen.profile);
   const pageSize = 4;
   const onChange = (pagination, sorter) => {
     dispatch(fetchMovieListAction(pagination.pageSize, pagination.current));
@@ -58,14 +34,36 @@ const ManagementMovie = () => {
       dispatch(fetchMovieListAction(pageSize, current));
     }
   };
-
-  // const handleUpdate = (maPhim) => {
-  //   let movieUpdate = movieList.items.find(item => item.maPhim === maPhim);
-  //   // đổ thông tin lên formData
-  //   const formData = new FormData();
-
-  //   };
-
+  const columns = [
+    {
+      title: <div className={styles.titleId}>Mã phim</div>,
+      dataIndex: "movieId",
+      sorter: (a, b) => a.age - b.age,
+      width: "10%",
+    },
+    {
+      title: <div className={styles.titleImg}>Hình ảnh</div>,
+      dataIndex: "image",
+      width: "20%",
+    },
+    {
+      title: <div className={styles.titleName}>Tên phim</div>,
+      dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      width: "20%",
+    },
+    {
+      title: <div className={styles.titleDesc}>Mô tả</div>,
+      dataIndex: "desc",
+      width: "30%",
+    },
+    {
+      title: <div className={styles.titleOption}>Tuỳ chọn</div>,
+      dataIndex: "action",
+      width: "10%",
+      hidden: auth?.maLoaiNguoiDung !== "QuanTri",
+    },
+  ].filter((item) => !item.hidden);
   const data = movieList?.items?.map((item, index) => {
     return {
       key: index,
@@ -97,15 +95,15 @@ const ManagementMovie = () => {
       ),
     };
   });
-
+  console.log(auth);
   return (
     <div className={styles.content}>
       <h4>Quản lý phim</h4>
-      <div className={styles.btn}>
+      { auth?.maLoaiNguoiDung === "QuanTri" ? (<div className={styles.btn}>
         <Link to="/addmovie">
           <Button type="primary">Thêm phim</Button>
         </Link>
-      </div>
+      </div>) : ""}
       <div className={styles.search}>
         <Search
           placeholder="Input search text"
