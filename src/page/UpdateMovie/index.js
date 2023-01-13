@@ -140,7 +140,7 @@ const UpdateMovie = () => {
 
           <Form.Item label="Hình ảnh" valuePropName="fileList">
             <Input type={"file"} onChange={handleSelectFile} />
-            <img src={uploadImg} alt="" />
+            <img src={uploadImg} alt="" className={styles.imgUpdate} />
           </Form.Item>
           <Form.Item label="Tác vụ">
             <Button type="primary" htmlType="submit">

@@ -90,7 +90,7 @@ const columns = [
       password: <div>{item.matKhau}</div>,
       name: <div className={styles.name}>{item.hoTen}</div>,
       email: <div>{item.email}</div>,
-      telNum: <div>{item.soDt}</div>,
+      telNum: <div>{item.soDt || item.soDT}</div>,
       action: (
         <div className={styles.option}>
           <div className={styles.update}>
