@@ -47,7 +47,7 @@ const UpdateMovie = () => {
   useEffect(() => {
     setInititalValue();
   }, []);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,13 +62,17 @@ const UpdateMovie = () => {
     formData.append("sapChieu", values.sapChieu);
     formData.append("hot", values.hot);
     formData.append("danhGia", values.danhGia);
-    if (selectedImg) formData.append("File", selectedImg, selectedImg?.type?.split('/')[1]);
+    if (selectedImg)
+      formData.append("File", selectedImg, selectedImg?.type?.split("/")[1]);
     formData.append("maNhom", values.maNhom);
 
     let res = await updateMovie(formData);
-    if(res.data.statusCode === 200) {
+    console.log(res);
+    if (res?.data?.statusCode === 200) {
       dispatch(fetchMovieListAction(4, 1));
-      navigate("/")
+      navigate("/");
+    } else {
+      alert(res?.data?.content);
     }
   };
   const handleSelectFile = (e) => {
@@ -104,10 +108,10 @@ const UpdateMovie = () => {
               <Radio.Button value="large">Large</Radio.Button>
             </Radio.Group>
           </Form.Item>
-          <Form.Item  name="maPhim" hidden>
+          <Form.Item name="maPhim" hidden>
             <Input />
           </Form.Item>
-          <Form.Item  name="maNhom" hidden>
+          <Form.Item name="maNhom" hidden>
             <Input />
           </Form.Item>
           <Form.Item label="Tên phim" name="tenPhim">

@@ -127,6 +127,8 @@ const LayoutAdmin = ({ children }) => {
           width={200}
           style={{
             background: colorBgContainer,
+            position: "fixed",
+            minHeight: "100vh",
           }}
           className="sider"
         >
@@ -144,7 +146,9 @@ const LayoutAdmin = ({ children }) => {
         </Sider>
         <Layout
           style={{
-            padding: "0 24px 24px",
+            padding: "64px 24px 24px",
+            overflow: "auto",
+            marginLeft: 200,
           }}
         >
           <Breadcrumb
@@ -155,8 +159,7 @@ const LayoutAdmin = ({ children }) => {
           <Content
             style={{
               padding: 24,
-              marginTop: 64,
-              height: "calc(100vh - 118px)",
+              minHeight: "calc(100vh - 128px)",
               background: colorBgContainer,
             }}
           >

@@ -43,7 +43,7 @@ export const updateMovie = async (formData) => {
     });
     return res;
   } catch (err) {
-    console.log(err);
+    return err?.response
   }
 };
 
