@@ -55,6 +55,7 @@ const UpdateMovie = () => {
     const formData = new FormData();
     formData.append("maPhim", values.maPhim);
     formData.append("tenPhim", values.tenPhim);
+    formData.append("trailer", values.trailer);
     formData.append("moTa", values.moTa);
     formData.append("ngayKhoiChieu", values.ngayKhoiChieu);
     formData.append("dangChieu", values.dangChieu);

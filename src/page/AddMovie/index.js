@@ -28,6 +28,7 @@ const AddMovie = () => {
     const formData = new FormData();
     formData.append("maPhim", maPhim);
     formData.append("tenPhim", values.tenPhim);
+    formData.append("trailer", values.trailer);
     formData.append("moTa", values.moTa);
     formData.append(
       "ngayKhoiChieu",
